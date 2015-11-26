@@ -13,8 +13,8 @@
             <h:panelGrid id="panel" columns="2" border="0" cellpadding="0" cellspacing="2">
 
                 <h:outputLabel for="typeSelect" rendered="true" value="Type: " />
-                <h:selectOneMenu id="typeSelect" value="#{administratorManagerForAll.newUser.type}">
-                    <f:selectItems value="#{administratorManagerForAll.userTypeValues}" var="userType"
+                <h:selectOneMenu id="typeSelect" value="#{userManager.newUser.type}">
+                    <f:selectItems value="#{userManager.userTypeValues}" var="userType"
                                    itemValue="#{type}" itemLabel="#{userType.label}"/>
                 </h:selectOneMenu>
             </h:panelGrid>
@@ -24,38 +24,38 @@
             <h:inputText 
                 id="nameInputText" 
                 required="true" 
-                value="#{administratorManagerForAll.newUser.name}" />
+                value="#{userManager.newUser.name}" />
             <h:message for="nameInputText" />
             <h:outputLabel for="usernameInputText" rendered="true" value="Username: " />
             <h:inputText 
                 id="usernameInputText" 
                 required="true" 
-                value="#{administratorManagerForAll.newUser.username}" />
+                value="#{userManager.newUser.username}" />
             <h:message for="usernameInputText" />
 
             <h:outputLabel for="emailInputText" rendered="true" value="Email: " />
             <h:inputText 
                 id="emailInputText" 
                 required="true" 
-                value="#{administratorManagerForAll.newUser.email}" />
+                value="#{userManager.newUser.email}" />
             <h:message for="emailInputText" />
             <h:outputLabel for="passwordInputText" rendered="true" value="Password: " />
             <h:inputSecret 
                 id="passwordInputText" 
                 required="true" 
-                value="#{administratorManagerForAll.newUser.password}" />
+                value="#{userManager.newUser.password}" />
             <h:message for="passwordInputText" />
             <h:outputLabel for="confirmpasswordInputText" rendered="true" value=" Confirm Password: " />
             <h:inputSecret 
                 id="confirmpasswordInputText"
                 required="true" 
-                value="#{administratorManagerForAll.passwordVerify}" />
+                value="#{userManager.passwordVerify}" />
             <h:message for="confirmpasswordInputText" />
 
 
             </h:panelGrid>
             <hr></hr>
-            <h:commandButton value="Create" action="#{administratorManagerForAll.createUser}" />
+            <h:commandButton value="Create" action="#{userManager.createUser}" />
 
         </h:form>
         <h:form>

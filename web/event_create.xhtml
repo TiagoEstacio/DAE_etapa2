@@ -20,7 +20,7 @@
                 <h:inputText 
                     id="nameInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.newEvent.name}" 
+                    value="#{userManager.newEvent.name}" 
                     />
                 <h:message for="nameInputText" />
                 
@@ -28,13 +28,13 @@
                 <h:inputText 
                     id="descriptionInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.newEvent.description}" />
+                    value="#{userManager.newEvent.description}" />
                 <h:message for="descriptionInputText" />
                 <h:outputLabel for="startdateInputText" rendered="true" value="Start Date: " />
                 <h:inputText 
                     id="startdateInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.newEvent.startDate}"
+                    value="#{userManager.newEvent.startDate}"
                     p:placeholder="dd/mm/yyyy hh:mm" />
                  
                  <h:message for="startdateInputText" />
@@ -42,7 +42,7 @@
                 <h:inputText 
                     id="finishdateInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.newEvent.finishDate}"
+                    value="#{userManager.newEvent.finishDate}"
                     p:placeholder="dd/mm/yyyy hh:mm" />
                 <h:message for="finihdateInputText" />
                 
@@ -55,7 +55,7 @@
             
             
             <hr></hr>
-            <h:commandButton value="Create" action="#{administratorManagerForAll.createEvent}" />
+            <h:commandButton value="Create" action="#{userManager.createEvent}" />
 
         </h:form>
         <h:form>

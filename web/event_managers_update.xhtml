@@ -13,19 +13,19 @@
             <h:outputLabel for="username" value="Name: " />
             <h:outputText 
                 id="username"
-                value="#{administratorManagerForAll.currentEvent.name}"/>
+                value="#{userManager.currentEvent.name}"/>
 
             <h:outputLabel for="description" value="Description: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManagerForAll.currentEvent.description}"/>
+                value="#{userManager.currentEvent.description}"/>
                
                     <h:form>
 
-                        <h:selectManyCheckbox value="#{administratorManagerForAll.managersSelected}"  layout="PageDirection" 
+                        <h:selectManyCheckbox value="#{userManager.managersSelected}"  layout="PageDirection" 
                                   styleClass="formLabelList"> 
 
-                            <c:forEach var="list" items="#{administratorManagerForAll.allManagers}" > 
+                            <c:forEach var="list" items="#{userManager.allManagers}" > 
                     <p>  <f:selectItem itemValue="#{list.name}" itemLabel="#{list.name}" /> </p>
                 </c:forEach> 
 
@@ -34,7 +34,7 @@
 
             <br />
 
-            <h:commandButton value="Refresh" actionListener="#{administratorManagerForAll.addManagersList}"  />
+            <h:commandButton value="Refresh" actionListener="#{userManager.addManagersList}"  />
             <hr></hr>      
             <h:commandButton value="Back" action="event_lists?faces-redirect=true"/>
             </h:form> 

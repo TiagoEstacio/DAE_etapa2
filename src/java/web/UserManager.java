@@ -39,7 +39,7 @@ import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
-public class AdministratorManagerForAll {
+public class UserManager {
 
     
    @EJB
@@ -80,7 +80,7 @@ public class AdministratorManagerForAll {
     private List<String> managersSelected;
     private List<Category> categoriesM = new ArrayList<>();
 
-    public AdministratorManagerForAll() {
+    public UserManager() {
         newUser = new UserDTO();
         newAdministrator = new AdministratorDTO();
         newManager = new ManagerDTO();

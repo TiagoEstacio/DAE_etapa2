@@ -14,7 +14,7 @@
         <h:dataTable
             var="attendant" 
             summary="Table of attendants"
-            value="#{administratorManagerForAll.allAttendants}"
+            value="#{userManager.allAttendants}"
             rules="all"
             cellpadding="10">
             <h:column>
@@ -58,7 +58,7 @@
                     <h:outputText value="Number events" />
                 </f:facet>
                 <h:form>  
-                    <h:outputText value="#{administratorManagerForAll.getAttendantNumberEvents(attendant.id)}" />    
+                    <h:outputText value="#{userManager.getAttendantNumberEvents(attendant.id)}" />    
                 </h:form>
             </h:column>
             
@@ -69,7 +69,7 @@
                 <h:form>
                     <h:commandLink id="attendant_events_link" action="attendant_events_list?faces-redirect=true">
                         <h:outputText value="details" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentAttendant}" value="#{attendant}" />
+                        <f:setPropertyActionListener target="#{userManager.currentAttendant}" value="#{attendant}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>

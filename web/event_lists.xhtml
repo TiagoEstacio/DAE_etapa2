@@ -16,7 +16,7 @@
         <h:dataTable
             var="event" 
             summary="Table of users"
-            value="#{administratorManagerForAll.allEvents}"
+            value="#{userManager.allEvents}"
             rules="all"
             cellpadding="10">
             <h:column>
@@ -62,7 +62,7 @@
                 <h:form>
                     <h:commandLink id="details" action="event_details?faces-redirect=true">
                         <h:outputText value="details" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                        <f:setPropertyActionListener target="#{userManager.currentEvent}" value="#{event}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>
@@ -74,7 +74,7 @@
                 <h:form>
                     <h:commandLink id="user_update_link" action="event_update?faces-redirect=true">
                         <h:outputText value="Update" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                        <f:setPropertyActionListener target="#{userManager.currentEvent}" value="#{event}" />
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -86,7 +86,7 @@
                 </f:facet>
                 <h:form>
 
-                    <h:commandLink id="remove_link" value="Remove" actionListener="#{administratorManagerForAll.removeEvent}">
+                    <h:commandLink id="remove_link" value="Remove" actionListener="#{userManager.removeEvent}">
                         <f:param name="deleteEventId" id="deleteEventId" value="#{event.id}" />
                     </h:commandLink>
                 </h:form> 
@@ -98,7 +98,7 @@
                 <h:form>
                     <h:commandLink id="updatecategories" action="event_categories_update?faces-redirect=true">
                         <h:outputText value="Update Categories" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                        <f:setPropertyActionListener target="#{userManager.currentEvent}" value="#{event}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>
@@ -109,7 +109,7 @@
                 <h:form>
                     <h:commandLink id="updatemanagers" action="event_managers_update?faces-redirect=true">
                         <h:outputText value="Update Managers" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                        <f:setPropertyActionListener target="#{userManager.currentEvent}" value="#{event}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>

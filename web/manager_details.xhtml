@@ -16,17 +16,17 @@
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="username"
-                value="#{administratorManagerForAll.currentManager.name}"/>
+                value="#{userManager.currentManager.name}"/>
 
             <h:outputLabel for="username" value="Username: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManagerForAll.currentManager.username}"/>
+                value="#{userManager.currentManager.username}"/>
 
             <h:outputLabel for="email" value="Email: " />
             <h:outputText 
                 id="email"
-                value="#{administratorManagerForAll.currentManager.email}"/>
+                value="#{userManager.currentManager.email}"/>
 
         </h:panelGrid>
         <br/> 
@@ -40,7 +40,7 @@
         <h:dataTable
             var="event"
             summary="List of all manager's events"
-            value="#{administratorManagerForAll.allEventsOfCurrentManager}"
+            value="#{userManager.allEventsOfCurrentManager}"
             rules="all"
             cellpadding="5">
 
@@ -89,7 +89,7 @@
                 <h:form>
                     <h:commandLink id="details" action="event_add_attendants?faces-redirect=true">
                         <h:outputText value="Add atendants" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                        <f:setPropertyActionListener target="#{userManager.currentEvent}" value="#{event}" />
                     </h:commandLink>
                 </h:form>                
             </h:column> 

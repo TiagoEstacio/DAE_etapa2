@@ -15,7 +15,7 @@
         <h:dataTable
             var="user" 
             summary="Table of users"
-            value="#{administratorManagerForAll.allManagers}"
+            value="#{userManager.allManagers}"
             rules="all"
             cellpadding="10">
             <h:column>
@@ -50,7 +50,7 @@
                     <h:outputText value="Number events" />
                 </f:facet>
                 <h:form>  
-                    <h:outputText value="#{administratorManagerForAll.getManagerNumberEvents(user.id)}" />  
+                    <h:outputText value="#{userManager.getManagerNumberEvents(user.id)}" />  
                 </h:form>
             </h:column>
 
@@ -61,7 +61,7 @@
                 <h:form>
                     <h:commandLink id="details" action="manager_details?faces-redirect=true">
                         <h:outputText value="details" />
-                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentManager}" value="#{user}" />
+                        <f:setPropertyActionListener target="#{userManager.currentManager}" value="#{user}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>

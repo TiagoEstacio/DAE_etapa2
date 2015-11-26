@@ -15,17 +15,17 @@
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="username"
-                value="#{administratorManagerForAll.currentAttendant.name}"/>
+                value="#{userManager.currentAttendant.name}"/>
 
             <h:outputLabel for="username" value="Username: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManagerForAll.currentAttendant.username}"/>
+                value="#{userManager.currentAttendant.username}"/>
 
             <h:outputLabel for="email" value="Email: " />
             <h:outputText 
                 id="email"
-                value="#{administratorManagerForAll.currentAttendant.email}"/>
+                value="#{userManager.currentAttendant.email}"/>
 
         </h:panelGrid>
         <br/> 
@@ -40,7 +40,7 @@
         <h:dataTable
             var="event"
             summary="List of all attendant events"
-            value="#{administratorManagerForAll.allEventsOfCurrentAttendant}"
+            value="#{userManager.allEventsOfCurrentAttendant}"
             rules="all"
             cellpadding="5">
 

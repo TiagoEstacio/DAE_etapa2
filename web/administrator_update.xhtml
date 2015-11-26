@@ -15,44 +15,44 @@
                 <h:outputLabel for="typeOutputText" rendered="true" value="Type: " />
                 <h:outputText 
                     id="typeOutputText"               
-                    value="#{administratorManagerForAll.currentUser.type}" />
+                    value="#{userManager.currentUser.type}" />
                 <h:message for="typeOutputText" />
                 <h:outputLabel for="nameInputText" rendered="true" value="Name: " />
                 <h:inputText 
                     id="nameInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.currentUser.name}" />
+                    value="#{userManager.currentUser.name}" />
                 <h:message for="nameInputText" />
                 <h:outputLabel for="usernameInputText" rendered="true" value="Username: " />
                 <h:inputText 
                     id="usernameInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.currentUser.username}" />
+                    value="#{userManager.currentUser.username}" />
                 <h:message for="usernameInputText" />
                
                 <h:outputLabel for="emailInputText" rendered="true" value="Email: " />
                 <h:inputText 
                     id="emailInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.currentUser.email}" />
+                    value="#{userManager.currentUser.email}" />
                 <h:message for="emailInputText" />
                 <h:outputLabel for="passwordInputText" rendered="true" value="Password: " />
                 <h:inputSecret 
                     id="passwordInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.currentUser.password}" />
+                    value="#{userManager.currentUser.password}" />
                 <h:message for="passwordInputText" />
                 <h:outputLabel for="confirmpasswordInputText" rendered="true" value=" Confirm Password: " />
                 <h:inputSecret 
                     id="confirmpasswordInputText" 
                     required="true" 
-                    value="#{administratorManagerForAll.passwordVerify}" />
+                    value="#{userManager.passwordVerify}" />
                 <h:message for="confirmpasswordInputText" />
                
               
             </h:panelGrid>
             <hr></hr>
-            <h:commandButton value="Update" action="#{administratorManagerForAll.updateUser}"/>
+            <h:commandButton value="Update" action="#{userManager.updateUser}"/>
 
         </h:form>
         <h:form>
