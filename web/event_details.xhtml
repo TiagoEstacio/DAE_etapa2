@@ -19,23 +19,23 @@ and open the template in the editor.
             <h:panelGrid id="name" columns="2" border="0" cellpadding="0" cellspacing="2">
                 <h:outputLabel rendered="true" value=" Name:" />
                 <h:outputText
-                    value="#{userManager.currentEvent.name}" />
+                    value="#{eventManager.currentEvent.name}" />
             </h:panelGrid>
             <h:panelGrid id="description" columns="2" border="0" cellpadding="0" cellspacing="2">
                 <h:outputLabel  rendered="true" value=" Description:" />
                 <h:outputText
-                    value="#{userManager.currentEvent.description}" />
+                    value="#{eventManager.currentEvent.description}" />
             </h:panelGrid>
             <h:panelGrid id="startdate" columns="2" border="0" cellpadding="0" cellspacing="2">
                 <h:outputLabel rendered="true" value=" Start Date:" />
                 <h:outputText
-                    value="#{userManager.currentEvent.startDate}" />
+                    value="#{eventManager.currentEvent.startDate}" />
             </h:panelGrid>
 
             <h:panelGrid id="finishdate" columns="2" border="0" cellpadding="0" cellspacing="2">
                 <h:outputLabel rendered="true" value=" Finish Date:" />
                 <h:outputText
-                    value="#{userManager.currentEvent.finishDate}" />
+                    value="#{eventManager.currentEvent.finishDate}" />
             </h:panelGrid>
             <hr></hr>
             <h3 style="color: green">List Categories </h3>
@@ -43,7 +43,7 @@ and open the template in the editor.
             <h:dataTable
                 var="category" 
                 summary="Table of categries of event"
-                value="#{userManager.allCategoriesOfCurrentEvent}"
+                value="#{eventManager.allCategoriesOfCurrentEvent}"
                 rules="all"
                 cellpadding="10">
                 <h:column>

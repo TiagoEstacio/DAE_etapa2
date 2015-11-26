@@ -13,13 +13,11 @@ import ejbs.AttendantBean;
 import ejbs.CategoryBean;
 import ejbs.EventBean;
 import ejbs.ManagerBean;
-import entities.Category;
 import exceptions.AttendantEnrolledException;
 import exceptions.AttendantNotEnrolledException;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistsException;
 import exceptions.EventEnrolledException;
-import exceptions.EventNotEnrolledException;
 import exceptions.ManagerEnrolledException;
 import exceptions.ManagerNotEnrolledException;
 import exceptions.MyConstraintViolationException;
@@ -28,21 +26,17 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.component.UIParameter;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
 public class UserManager {
 
-    
-   @EJB
+    @EJB
     private AdministratorBean administratorBean;
     @EJB
     private ManagerBean managerBean;
@@ -78,7 +72,6 @@ public class UserManager {
     private List<String> attendantsSelected;
     private List<String> categoriesSelected;
     private List<String> managersSelected;
-    private List<Category> categoriesM = new ArrayList<>();
 
     public UserManager() {
         newUser = new UserDTO();
@@ -143,14 +136,13 @@ public class UserManager {
         System.out.println("Current User ID" + currentUser.getId());
         try {
             //if (currentUser.getPassword().equals(passwordVerify)) {
-                administratorBean.updateUser(
-                        currentUser.getId(),
-                        
-                        currentUser.getName(),
-                        currentUser.getEmail(),
-                        currentUser.getPassword()
-                );
-                return "administrator_lists?faces-redirect=true";
+            administratorBean.updateUser(
+                    currentUser.getId(),
+                    currentUser.getName(),
+                    currentUser.getEmail(),
+                    currentUser.getPassword()
+            );
+            return "administrator_lists?faces-redirect=true";
 //            } else {
 //                //TODO - NOT WORKING
 //                throw new PasswordValidationException("Password not equal to password confirmation.");
@@ -164,71 +156,12 @@ public class UserManager {
 
     }
 
-    public String createAdministrator() throws PasswordValidationException {
-        try {
-            //verificar password
-            if (newAdministrator.getPassword().equals(passwordVerify)) {
-                administratorBean.createAdministrator(
-                        newAdministrator.getUsername(),
-                        newAdministrator.getPassword(),
-                        newAdministrator.getName(),
-                        newAdministrator.getEmail());
-                newAdministrator.reset();
-                return "administrator_panel?faces-redirect=true";
-            } else {
-                throw new PasswordValidationException("Password not equal to password confirmation.");
-            }
-        } catch (EntityAlreadyExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return null;
-    }
-
     public List<AdministratorDTO> getAllAdministrators() {
         try {
             return administratorBean.getAllAdministrators();
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
-        }
-    }
-
-    public String updateAdministrator() throws PasswordValidationException {
-
-        try {
-            //verificar password
-            if (currentAdministrator.getPassword().equals(passwordVerify)) {
-                administratorBean.updateAdministrator(
-                        currentAdministrator.getId(),
-                        currentAdministrator.getUsername(),
-                        currentAdministrator.getPassword(),
-                        currentAdministrator.getName(),
-                        currentAdministrator.getEmail());
-                return "administrator_lists?faces-redirect=true";
-            } else {
-                //TODO - NOT WORKING
-                throw new PasswordValidationException("Password not equal to password confirmation.");
-            }
-        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return "administrator_update?faces-redirect=true";
-
-    }
-
-    public void removeAdministrator(ActionEvent event) {
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("administratorId");
-            Long id = Long.parseLong(param.getValue().toString());
-            administratorBean.removeAdministrator(id);
-        } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }
 
@@ -370,6 +303,18 @@ public class UserManager {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }
+
+    public List<ManagerDTO> getEnrolledManagersInEvents() {
+        try {
+            return managerBean.getEnrolledManagersInEvents(currentEvent.getId());
+        } catch (EntityDoesNotExistsException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return null;
+    }
+
 
     /* Caso manager precise de categories
      public void enrollManagerInCategory(ActionEvent event) {
@@ -558,105 +503,12 @@ public class UserManager {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////// EVENTS ////////////////////
-    public String createEvent() {
-        try {
-            if (newEvent.getStartDate().matches("^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
-                    + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
-                    + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
-                    + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$")
-                    && newEvent.getFinishDate().matches("^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
-                            + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
-                            + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
-                            + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$")) {
-                eventBean.createEvent(
-                        newEvent.getName(),
-                        newEvent.getDescription(),
-                        newEvent.getStartDate(),
-                        newEvent.getStartDate());
-
-                //addCategoriesList();
-                newEvent.reset();
-                return "administrator_panel?faces-redirect=true";
-            }
-        } catch (EntityAlreadyExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return null;
-    }
-
-    public List<EventDTO> getAllEvents() {
-        try {
-            return eventBean.getAllEvents();
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
-        }
-    }
-
-    public int getAllEventsOfCategory(Long Id) {
-        try {
-            return categoryBean.getNumberofEvents(Id);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return 0;
-        }
-    }
-
-    public int getNumberEvents(Long id) throws EntityDoesNotExistsException {
-        return categoryBean.getNumberofEvents(id);
-    }
-
-    public String updateEvent() {
-        try {
-            eventBean.updateEvent(
-                    currentEvent.getId(),
-                    currentEvent.getName(),
-                    currentEvent.getDescription(),
-                    currentEvent.getStartDate(),
-                    currentEvent.getStartDate());
-            return "event_lists?faces-redirect=true";
-
-        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return "event_update?faces-redirect=true";
-    }
-
-    public void removeEvent(ActionEvent event) {
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteEventId");
-            Long id = Long.parseLong(param.getValue().toString());
-            eventBean.removeEvent(id);
-        } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-    }
-
     public String addCategoriesList() throws EntityDoesNotExistsException, EventEnrolledException {
 
         for (String str : categoriesSelected) {
             eventBean.enrollEventInCategory(newEvent.getId(), (categoryBean.getCategoryByName(str)).getId());
         }
         return "administrator_panel?faces-redirect=true";
-    }
-
-    public List<ManagerDTO> getEnrolledManagersInEvents() {
-        try {
-            return managerBean.getEnrolledManagersInEvents(currentEvent.getId());
-        } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return null;
     }
 
     public List<AttendantDTO> getEnrolledAttendantsInEvents() {
@@ -668,28 +520,6 @@ public class UserManager {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
         return null;
-    }
-
-    public List<String> getManagersSelected() {
-        return managersSelected;
-    }
-
-    public void setManagersSelected(List<String> managersSelected) {
-        this.managersSelected = managersSelected;
-    }
-
-    public List<String> getAttendantsSelected() {
-        return attendantsSelected;
-    }
-
-    public void setAttendantsSelected(List<String> attendantsSelected) {
-        this.attendantsSelected = attendantsSelected;
-    }
-
-    //retorna os attendants actuais do evento
-    public List<AttendantDTO> getAttendantsDisponiveisSelected() {
-        actualizarAttendantsSelected();
-        return attendantsDisponiveisSelected;
     }
 
     public String addAttendantsList() throws EntityDoesNotExistsException, AttendantNotEnrolledException, AttendantEnrolledException {
@@ -754,77 +584,6 @@ public class UserManager {
         }
         actualizarManagersSelected();
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////// CATEGORIES ////////////////
-
-    public String createCategory() {
-        try {
-            categoryBean.createCategory(
-                    currentCategory.getName());
-            newCategory.reset();
-            return "administrator_panel?faces_redirect=true";
-        } catch (EntityAlreadyExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return null;
-    }
-
-    public List<CategoryDTO> getAllCategories() {
-        try {
-            return categoryBean.getAllCategories();
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
-        }
-    }
-
-    public List<EventDTO> getAllCategoryEvents() {
-        try {
-            return categoryBean.getAllCategoryEvents(currentCategory.getId());
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
-        }
-    }
-
-    public List<CategoryDTO> getAllCategoriesOfCurrentEvent() {
-        try {
-            return categoryBean.getAllCategoriesOfCurrentEvent(currentEvent.getId());
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
-        }
-    }
-
-    public String updateCategory() {
-
-        try {
-            categoryBean.updateCategory(
-                    currentCategory.getId(),
-                    currentCategory.getName());
-            return "category_lists?faces-redirect=true";
-
-        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return "category_update?faces-redirect=true";
-    }
-
-    public void removeCategory(ActionEvent event) {
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteCategoryId");
-            Long id = Long.parseLong(param.getValue().toString());
-            categoryBean.removeCategory(id);
-        } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-    }
 
     public List<AttendantDTO> getEnrolledAttendantsInCategories() {
         try {
@@ -836,25 +595,22 @@ public class UserManager {
         }
         return null;
     }
+    /*
+     public String updateEventCategories() throws EntityDoesNotExistsException, EventNotEnrolledException, EventEnrolledException {
+     for (CategoryDTO cat : eventBean.getAllCategoriesOfEvent(currentEvent.getId())) {
 
-    public String updateEventCategories() throws EntityDoesNotExistsException, EventNotEnrolledException, EventEnrolledException {
-        for (CategoryDTO cat : eventBean.getAllCategoriesOfEvent(currentEvent.getId())) {
+     eventBean.unrollEventInCategory(currentEvent.getId(), cat.getId());
+     }
+     //currentEvent.
+     eventBean.clearAllCategoriesInEvent(currentEvent.getId());
 
-            eventBean.unrollEventInCategory(currentEvent.getId(), cat.getId());
-        }
-        //currentEvent.
-        eventBean.clearAllCategoriesInEvent(currentEvent.getId());
-
-        for (String str : categoriesSelected) {
-            eventBean.enrollEventInCategory(currentEvent.getId(), (categoryBean.getCategoryByName(str)).getId());
-        }
-        //categoriesM.clear();
-        return "event_lists?faces-redirect=true";
-    }
-
-    public List<Category> getCategoriesM() {
-        return categoriesM;
-    }
+     for (String str : categoriesSelected) {
+     eventBean.enrollEventInCategory(currentEvent.getId(), (categoryBean.getCategoryByName(str)).getId());
+     }
+     //categoriesM.clear();
+     return "event_lists?faces-redirect=true";
+     }
+     */
 
     /* Caso manager precise de categories
      public List<ManagerDTO> getEnrolledManagersInCategories() {
@@ -872,10 +628,6 @@ public class UserManager {
     ///////////// GETTERS & SETTERS /////////
     public UserType[] getUserTypeValues() {
         return administratorBean.getTypesValues();
-    }
-
-    public void setCategoriesM(List<Category> categoriesM) {
-        this.categoriesM = categoriesM;
     }
 
     public List<ManagerDTO> getManagersDisponiveisSelected() {
@@ -996,6 +748,28 @@ public class UserManager {
 
     public void setCategoriesSelected(List<String> categoriesSelected) {
         this.categoriesSelected = categoriesSelected;
+    }
+
+    public List<String> getManagersSelected() {
+        return managersSelected;
+    }
+
+    public void setManagersSelected(List<String> managersSelected) {
+        this.managersSelected = managersSelected;
+    }
+
+    public List<String> getAttendantsSelected() {
+        return attendantsSelected;
+    }
+
+    public void setAttendantsSelected(List<String> attendantsSelected) {
+        this.attendantsSelected = attendantsSelected;
+    }
+
+    //retorna os attendants actuais do evento
+    public List<AttendantDTO> getAttendantsDisponiveisSelected() {
+        actualizarAttendantsSelected();
+        return attendantsDisponiveisSelected;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

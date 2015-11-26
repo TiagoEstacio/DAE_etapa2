@@ -13,20 +13,20 @@
                  <h:outputLabel for="idOutputText" rendered="true" value="ID: " />
                 <h:outputText 
                     id="idOutputText" 
-                    value="#{userManager.currentCategory.id}" />
+                    value="#{categoryManager.currentCategory.id}" />
                 <h:message for="idOutputText" />
                  
                 <h:outputLabel for="nameInputText" rendered="true" value="Name: " />
                 <h:inputText 
                     id="nameInputText" 
                     required="true" 
-                    value="#{userManager.currentCategory.name}" />
+                    value="#{categoryManager.currentCategory.name}" />
                 <h:message for="nameInputText" />
                 
                 
             </h:panelGrid>
             <hr></hr>
-            <h:commandButton value="Update" action="#{userManager.updateCategory}" />
+            <h:commandButton value="Update" action="#{categoryManager.updateCategory}" />
 
         </h:form>
         <h:form>

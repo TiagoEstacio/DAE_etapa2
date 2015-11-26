@@ -15,17 +15,17 @@
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="username"
-                value="#{userManager.currentUser.name}"/>
+                value="#{userManager.currentManager.name}"/>
 
             <h:outputLabel for="username" value="Username: " />
             <h:outputText 
                 id="name"
-                value="#{userManager.currentUser.username}"/>
+                value="#{userManager.currentManager.username}"/>
 
             <h:outputLabel for="email" value="Email: " />
             <h:outputText 
                 id="email"
-                value="#{userManager.currentUser.email}"/>
+                value="#{userManager.currentManager.email}"/>
 
         </h:panelGrid>
         <br/> 
@@ -100,7 +100,7 @@
 
 
         <h:form>
-            <h:commandButton value="Back" action="manager_lists.xhtml" />	
+            <h:commandButton value="Back" action="admin_manager_lists.xhtml" />	
         </h:form>
 
         <h:messages errorStyle="color: red" />        

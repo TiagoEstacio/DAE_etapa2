@@ -15,7 +15,7 @@
         <h:dataTable
             var="category" 
             summary="Table of users"
-            value="#{userManager.allCategories}"
+            value="#{categoryManager.allCategories}"
             rules="all"
             cellpadding="10">
             <h:column>
@@ -51,7 +51,7 @@
                     <h:outputText value="Nº Events" />
                 </f:facet>
                 <h:form>
-                    <h:outputText value="#{userManager.getNumberEvents(category.id)}" />
+                    <h:outputText value="#{categoryManager.getNumberEvents(category.id)}" />
                 </h:form>
             </h:column>
 
@@ -63,7 +63,7 @@
                 <h:form>
                     <h:commandLink id="details" action="category_details?faces-redirect=true">
                         <h:outputText value="details" />
-                        <f:setPropertyActionListener target="#{userManager.currentCategory}" value="#{category}" />
+                        <f:setPropertyActionListener target="#{categoryManager.currentCategory}" value="#{category}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>
@@ -75,7 +75,7 @@
                 <h:form>
                     <h:commandLink id="category_update_link" action="category_update?faces-redirect=true">
                         <h:outputText value="Update" />
-                        <f:setPropertyActionListener target="#{userManager.currentCategory}" value="#{category}" />
+                        <f:setPropertyActionListener target="#{categoryManager.currentCategory}" value="#{category}" />
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -87,7 +87,7 @@
                 <h:form>
 
                    
-                    <h:commandLink id="category_remove_link" value="Remove" actionListener="#{userManager.removeCategory}">
+                    <h:commandLink id="category_remove_link" value="Remove" actionListener="#{categoryManager.removeCategory}">
                         <f:param name="deleteCategoryId" id="deleteCategoryId" value="#{category.id}" />
                     </h:commandLink>
                 </h:form> 

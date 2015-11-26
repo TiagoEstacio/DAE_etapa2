@@ -16,13 +16,13 @@
                 <h:inputText 
                     id="nameInputText" 
                     required="true" 
-                    value="#{userManager.currentCategory.name}" />
+                    value="#{categoryManager.currentCategory.name}" />
                 <h:message for="nameInputText" />
                 
               
             </h:panelGrid>
             <hr></hr>
-            <h:commandButton value="Create" action="#{userManager.createCategory}" />
+            <h:commandButton value="Create" action="#{categoryManager.createCategory}" />
 
         </h:form>
         <h:form>
