@@ -81,7 +81,7 @@
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="Number of Attendants" />
-                    <h:outputText value="#{event.finishDate}" />
+                    <h:outputText value="#{eventManager.getNumberOfAttendants(event.id)}" />
                 </f:facet>
             </h:column>
             <h:column>

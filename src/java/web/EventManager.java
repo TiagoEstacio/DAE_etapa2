@@ -79,7 +79,25 @@ public class EventManager {
         return null;
     }
 
-    public List<EventDTO> getAllEvents() {
+    public String updateEvent() {
+        try {
+            eventBean.updateEvent(
+                    currentEvent.getId(),
+                    currentEvent.getName(),
+                    currentEvent.getDescription(),
+                    currentEvent.getStartDate(),
+                    currentEvent.getStartDate());
+            return "event_lists?faces-redirect=true";
+
+        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return "event_update?faces-redirect=true";
+    }
+    
+        public List<EventDTO> getAllEvents() {
         try {
             return eventBean.getAllEvents();
         } catch (Exception e) {
@@ -100,23 +118,15 @@ public class EventManager {
     public int getNumberEvents(Long id) throws EntityDoesNotExistsException {
         return categoryBean.getNumberofEvents(id);
     }
+    
+    public int getNumberOfAttendants(Long id) throws EntityDoesNotExistsException {
+        System.out.println("EVENT ID: " + id);
+                System.out.println("CURRENT EVENT ID: " + currentEvent.getId());
 
-    public String updateEvent() {
-        try {
-            eventBean.updateEvent(
-                    currentEvent.getId(),
-                    currentEvent.getName(),
-                    currentEvent.getDescription(),
-                    currentEvent.getStartDate(),
-                    currentEvent.getStartDate());
-            return "event_lists?faces-redirect=true";
+        
+        System.out.println("NUMBER OF ATTENDANTS: " + eventBean.getEventNumberOfAttendants(id));
 
-        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return "event_update?faces-redirect=true";
+        return eventBean.getEventNumberOfAttendants(id);
     }
 
     public void removeEvent(ActionEvent event) {
@@ -148,14 +158,6 @@ public class EventManager {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
         return null;
-    }
-
-    public List<String> getAttendantsSelected() {
-        return attendantsSelected;
-    }
-
-    public void setAttendantsSelected(List<String> attendantsSelected) {
-        this.attendantsSelected = attendantsSelected;
     }
 
     //retorna os attendants actuais do evento
@@ -255,4 +257,14 @@ public class EventManager {
     public void setNewEvent(EventDTO newEvent) {
         this.newEvent = newEvent;
     }
+    
+    public List<String> getAttendantsSelected() {
+        return attendantsSelected;
+    }
+
+    public void setAttendantsSelected(List<String> attendantsSelected) {
+        this.attendantsSelected = attendantsSelected;
+    }
+
+    
 }

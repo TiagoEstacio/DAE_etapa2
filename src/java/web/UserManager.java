@@ -435,7 +435,7 @@ public class UserManager {
         }
         return eventBean.getAttendantEvents(attendantId).size();
     }
-
+    
     /*
      public List<AttendantDTO> getCurrentAttendantsInEvent() {
      try {

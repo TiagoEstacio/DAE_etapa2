@@ -167,6 +167,15 @@ public class EventBean {
         }
         return null;
     }
+    
+    public int getEventNumberOfAttendants(Long id) throws EntityDoesNotExistsException {
+        Event event = em.find(Event.class, id);
+            if (event == null){
+                throw new EntityDoesNotExistsException("There is no event with that id.");
+            }
+        return event.getNumberOfAttendants();
+    }
+    
     public List<ManagerDTO> getEventManagers(String name) {
         Event event = getEventByName(name);
         if(event != null) {
