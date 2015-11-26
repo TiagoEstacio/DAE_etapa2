@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Update Event</title>
+    </h:head>
+    <h:body>
+        <h3 style="color: green">Event Update</h3>
+        <hr></hr>
+        <h:form>
+            <h:panelGrid id="panel" columns="3" border="0" cellpadding="0" cellspacing="2">
+                <h:outputLabel for="nameInputText" rendered="true" value="Name: " />
+                <h:inputText 
+                    id="nameInputText" 
+                    required="true" 
+                    value="#{administratorManagerForAll.currentEvent.name}" />
+                <h:message for="nameInputText" />
+            </h:panelGrid>
+
+            <h:panelGrid id="description" columns="3" border="0" cellpadding="0" cellspacing="2">
+                <h:outputLabel for="descriptionInputText" rendered="true" value="Description: " />
+                <h:inputText 
+                    id="descriptionInputText" 
+                    required="true" 
+                    value="#{administratorManagerForAll.currentEvent.description}" />
+                <h:message for="descriptionInputText" />
+            </h:panelGrid>
+            <h:panelGrid id="startdate" columns="3" border="0" cellpadding="0" cellspacing="2">
+                <h:outputLabel for="startdateInputText" rendered="true" value="Start Date: " />
+                <h:inputText 
+                    id="startdateInputText" 
+                    required="true" 
+                    value="#{administratorManagerForAll.currentEvent.startDate}" />
+                <h:message for="startdateInputText" />
+            </h:panelGrid>
+           
+            <h:panelGrid id="finishdate" columns="3" border="0" cellpadding="0" cellspacing="2">
+                <h:outputLabel for="finishdateInputText" rendered="true" value="Finish Date: " />
+                <h:inputText 
+                    id="finishdateInputText" 
+                    required="true" 
+                    value="#{administratorManagerForAll.currentEvent.finishDate}" />
+                <h:message for="finishdateInputText" />
+            </h:panelGrid>
+
+            <hr></hr>
+            <h:commandButton value="Update" action="#{administratorManagerForAll.updateEvent}" />
+
+
+
+
+        </h:form>
+        <h:form>
+            <h:commandButton value="Back" action="event_lists?faces-redirect=true" />	
+        </h:form>
+    </h:body>
+
+</html>
+

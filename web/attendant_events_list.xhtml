@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Attendant Events</title>
+    </h:head>
+    <h:body>
+        
+        <h3 style="color: green">My Details</h3>
+        <hr></hr>
+        
+        <h:panelGrid columns="2">
+
+            <h:outputLabel for="name" value="Name: " />
+            <h:outputText 
+                id="username"
+                value="#{administratorManagerForAll.currentAttendant.name}"/>
+
+            <h:outputLabel for="username" value="Username: " />
+            <h:outputText 
+                id="name"
+                value="#{administratorManagerForAll.currentAttendant.username}"/>
+
+            <h:outputLabel for="email" value="Email: " />
+            <h:outputText 
+                id="email"
+                value="#{administratorManagerForAll.currentAttendant.email}"/>
+
+        </h:panelGrid>
+        <br/> 
+        
+        <hr></hr>
+
+        
+        <h3 style="color: green">My Events</h3>
+
+        <hr></hr>
+        
+        <h:dataTable
+            var="event" 
+            summary="Table of events"
+            value="#{administratorManagerForAll.allEventsOfCurrentAttendant}"
+            rules="all"
+            cellpadding="10">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="ID" />
+                </f:facet>
+                <h:form>
+                    <h:outputText value="#{event.id}" />
+                </h:form>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:form>
+                    <h:outputText value="#{event.name}" />
+                </h:form>
+            </h:column>
+
+             <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Description" />
+                </f:facet>
+                <h:form>  
+                    <h:outputText value="#{event.description}" />    
+                </h:form>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Start Date" />
+                </f:facet>
+                <h:form>
+                    <h:outputText value="#{event.startDate}" />
+                </h:form>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Finish Date" />
+                </f:facet>
+                <h:form>
+                    <h:outputText value="#{event.finishDate}" />
+                </h:form>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Event open for presence" />
+                </f:facet>
+                <h:form>  
+                    <h:outputText value="#{event.openForEnroll}" />    
+                </h:form>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Details" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink id="event_presence_link" action="attendant_event_details?faces-redirect=true">
+                        <h:outputText value="details" />
+                        <f:setPropertyActionListener target="#{administratorManagerForAll.currentEvent}" value="#{event}" />
+                    </h:commandLink>  
+                </h:form>
+            </h:column>
+   
+        </h:dataTable>
+        <hr></hr>
+        
+         <h:form>
+            <h:commandButton value="Back" action="attendant_panel?faces-redirect=true" />	
+        </h:form>
+
+        <hr></hr>
+
+    </h:body>
+</html>
